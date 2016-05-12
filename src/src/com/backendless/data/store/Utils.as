@@ -139,10 +139,10 @@ package com.backendless.data.store
 
         for each( var item:QName in objInfo.properties )
         {
-          var obj:* = dataObject[ item.localName ];
+          var objA:* = dataObject[ item.localName ];
 
-          if( obj != null && (!ObjectUtil.isSimple( obj ) || obj is Array) )
-            addClassName( obj, false, context );
+          if( objA != null && (!ObjectUtil.isSimple( objA ) || objA is Array) )
+            addClassName( objA, false, context );
         }
 
         if( !isRoot && !dataObject.hasOwnProperty( "___class" ) )
