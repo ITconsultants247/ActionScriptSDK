@@ -19,11 +19,13 @@ package com.backendless.rpc
 {
 	import com.backendless.Backendless;
 	import com.backendless.core.backendless;
-  import com.backendless.data.store.Utils;
-  import com.backendless.messaging.BackendlessChannel;
+	import com.backendless.data.store.Utils;
+	import com.backendless.messaging.BackendlessChannel;
+	import com.backendless.messaging.SecureBackendlessChannel;
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.messaging.Channel;
 	import mx.messaging.ChannelSet;
 	import mx.rpc.AbstractOperation;
 	import mx.rpc.AsyncToken;
@@ -72,8 +74,21 @@ package com.backendless.rpc
 		
 		backendless function initChannel():void
 		{
+			
+			var _chan:Channel;
+			// check if AMF_ENDPOINT is using https or plain http
+			if (Backendless.AMF_ENDPOINT.indexOf("https") == 0)
+			{
+				_chan = new SecureBackendlessChannel(null, Backendless.AMF_ENDPOINT);
+			}
+			else
+			{
+				_chan = new BackendlessChannel(null, Backendless.AMF_ENDPOINT);
+			}
+
 			_channelSet = new ChannelSet();
-			_channelSet.addChannel(new BackendlessChannel(null, Backendless.AMF_ENDPOINT));
+			_channelSet.addChannel(_chan);
+				
 		}		
 	}
 }
